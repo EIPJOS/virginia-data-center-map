@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Center Alley Monitor</title>
+    <link rel="preconnect" href="https://unpkg.com" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">VA</div>
+          <div>
+            <h1>Data Center Alley Monitor</h1>
+            <p>Virginia grid intelligence</p>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <button class="nav-item active">Dashboard</button>
+          <button class="nav-item">Facilities</button>
+          <button class="nav-item">County Compare</button>
+          <button class="nav-item">Grid Signals</button>
+          <button class="nav-item muted">Data Sources</button>
+        </nav>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <span>Filters</span>
+            <button id="resetFilters" class="link-button">Reset</button>
+          </div>
+          <label>
+            County
+            <select id="countyFilter">
+              <option value="all">All counties</option>
+            </select>
+          </label>
+          <label>
+            Status
+            <select id="statusFilter">
+              <option value="all">All statuses</option>
+            </select>
+          </label>
+          <label>
+            Operator
+            <select id="operatorFilter">
+              <option value="all">All operators</option>
+            </select>
+          </label>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <span>Layers</span>
+            <span class="live-dot">Live</span>
+          </div>
+          <label class="toggle-row">
+            <span><i class="legend-dot existing"></i>Existing</span>
+            <input type="checkbox" data-layer="Existing" checked />
+          </label>
+          <label class="toggle-row">
+            <span><i class="legend-dot construction"></i>Under construction</span>
+            <input type="checkbox" data-layer="Under Construction" checked />
+          </label>
+          <label class="toggle-row">
+            <span><i class="legend-dot proposed"></i>Proposed</span>
+            <input type="checkbox" data-layer="Proposed" checked />
+          </label>
+        </section>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Northern Virginia</p>
+            <h2>Data center growth, grid pressure, and facility intelligence</h2>
+          </div>
+          <div class="timestamp">
+            <span class="pulse"></span>
+            <span id="lastUpdated">Updated today</span>
+          </div>
+        </header>
+
+        <section class="metrics" aria-label="Dashboard metrics">
+          <article>
+            <span>Total Facilities</span>
+            <strong id="totalFacilities">0</strong>
+            <small>seed dataset</small>
+          </article>
+          <article>
+            <span>Estimated Demand</span>
+            <strong id="totalMw">0 MW</strong>
+            <small>modeled from public ranges</small>
+          </article>
+          <article>
+            <span>Counties</span>
+            <strong id="countyCount">0</strong>
+            <small>tracked regions</small>
+          </article>
+          <article>
+            <span>Pressure Score</span>
+            <strong id="pressureScore">0</strong>
+            <small>density + growth signal</small>
+          </article>
+        </section>
+
+        <section class="workspace">
+          <div class="map-card">
+            <div id="map"></div>
+            <div class="map-overlay">
+              <span>Facility density</span>
+              <strong id="hotspotLabel">Loudoun corridor</strong>
+            </div>
+          </div>
+
+          <aside class="inspector">
+            <div class="inspector-header">
+              <p class="eyebrow">Selected Facility</p>
+              <h3 id="facilityName">Choose a marker</h3>
+            </div>
+            <dl id="facilityDetails" class="details">
+              <div>
+                <dt>Hint</dt>
+                <dd>Click any data center marker to inspect operator, county, status, and source.</dd>
+              </div>
+            </dl>
+            <a id="sourceLink" class="source-link hidden" href="#" target="_blank" rel="noreferrer">Open source</a>
+          </aside>
+        </section>
+
+        <section class="analytics">
+          <article class="chart-card">
+            <div class="card-heading">
+              <span>Facilities by County</span>
+              <small>filtered view</small>
+            </div>
+            <canvas id="countyChart"></canvas>
+          </article>
+          <article class="chart-card">
+            <div class="card-heading">
+              <span>Demand by Status</span>
+              <small>estimated MW</small>
+            </div>
+            <canvas id="statusChart"></canvas>
+          </article>
+          <article class="watchlist">
+            <div class="card-heading">
+              <span>Watchlist</span>
+              <small>portfolio signals</small>
+            </div>
+            <ul id="watchlist"></ul>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>
