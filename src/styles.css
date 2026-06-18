@@ -376,9 +376,17 @@ select {
   padding: 16px;
 }
 
+.chart-card {
+  height: 280px;
+  min-height: 0;
+  overflow: hidden;
+}
+
 .chart-card canvas {
-  width: 100%;
-  height: 205px;
+  display: block;
+  width: 100% !important;
+  height: 205px !important;
+  max-height: 205px;
   margin-top: 12px;
 }
 
