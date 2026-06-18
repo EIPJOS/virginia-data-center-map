@@ -82,6 +82,12 @@ function renderMarkers(items) {
       title: item.name
     });
 
+    marker.bindTooltip(`${item.name} - ${formatMw(item.estimatedMw)}`, {
+      direction: "top",
+      offset: [0, -8],
+      opacity: 0.96
+    });
+
     marker.on("click", () => {
       state.selectedId = item.id;
       renderInspector(item);
@@ -92,7 +98,14 @@ function renderMarkers(items) {
 
   if (items.length > 0) {
     const bounds = L.latLngBounds(items.map((item) => [item.latitude, item.longitude]));
-    map.fitBounds(bounds.pad(0.28), { animate: true, maxZoom: 9 });
+
+    requestAnimationFrame(() => {
+      map.invalidateSize();
+      map.fitBounds(bounds.pad(0.16), {
+        animate: false,
+        maxZoom: items.length === 1 ? 10 : 9
+      });
+    });
   }
 }
 
